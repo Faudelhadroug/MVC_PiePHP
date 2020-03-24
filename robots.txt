@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /Core/
+Disallow: /src/
+Allow: /src/View/
