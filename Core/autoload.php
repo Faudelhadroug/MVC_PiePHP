@@ -6,11 +6,13 @@ function autoLoad($class)
 {   
     $class = substr(substr($class, strpos($class, '\\')), 1); // Pour récuperer seulement le nom du fichier sans namespace
     $classpath = $class.'.php';
-    $arrayPath = [
+    $arrayPath = 
+    [
         'Core',
+        'src',
         'src/Model',
         'src/Controller',
-        'src/View',
+        'src/View'
     ];
     for ($i=0; $i < count($arrayPath); $i++) 
     { 
