@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class UserModel extends Core\Database
+class UserModel
 {
 
 }
