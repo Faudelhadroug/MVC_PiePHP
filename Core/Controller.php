@@ -11,10 +11,10 @@ class Controller
         $f = implode(DIRECTORY_SEPARATOR,  str_replace('\\', '', [dirname(__DIR__), 'src', 'View', str_replace('Controller', '', basename(get_class($this))), $view])) . '.php'; //[dirname(__DIR__), 'src', 'View', str_replace('Controller', '', basename(get_class($this))), $view]). '.php';
         // str_replace('\\', '', [dirname(__DIR__), 'src', 'View', str_replace('Controller', '', basename(get_class($this))), $view])
         //var_dump(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'src', 'View', 'index']) . '.php');
-        var_dump($f);
+       // var_dump($f);
         if (file_exists($f))
         {
-            var_dump($f);
+          //  var_dump($f);
             ob_start();
             include($f);
             $view = ob_get_clean();

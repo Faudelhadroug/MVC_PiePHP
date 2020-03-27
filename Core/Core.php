@@ -11,7 +11,7 @@ class Core
     }
     public function run()
     {
-        echo __CLASS__ . " [OK]" . PHP_EOL; 
+       // echo __CLASS__ . " [OK]" . PHP_EOL; 
 
         $baseLinkCountStatic = strlen('/github/MVC_PiePHP');
         $virginLinkStatic = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCountStatic));
