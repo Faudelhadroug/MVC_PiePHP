@@ -1,7 +1,7 @@
 <?php
 
 namespace Core;
-use Core\Router;
+//use Core\Router;
 
 class Core
 {
