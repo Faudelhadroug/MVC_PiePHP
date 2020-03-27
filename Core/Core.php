@@ -13,10 +13,31 @@ class Core
     {
         echo __CLASS__ . " [OK]" . PHP_EOL; 
 
-        /* Routeur Dynamique */
+        $baseLinkCountStatic = strlen('/github/MVC_PiePHP');
+        $virginLinkStatic = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCountStatic));
+       
+        /* Routeur Statique & Dynamique */
+        
+        if ($route = Router::get($virginLinkStatic) !== null)   // Routage statique
+        {
 
+            $class = Router::get($virginLinkStatic)['controller'];
+            $action = Router::get($virginLinkStatic)['action'];
+            $controller = 'Controller\\'.ucfirst(($class)).'Controller';
+            $doAction = $action.'Action';
+            $object = new $controller();
+            $object->$doAction();
+        }
+        else    // Routage dynamique
+        {
+            $routageDynamique = $this->Dynamique();
+        }
+    }
+    protected function Dynamique()
+    {
         $baseLinkCount = strlen('/github/MVC_PiePHP/');
         $virginLink = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCount));
+       
         $nbParamLink = substr_count($virginLink, '/');
         if ($nbParamLink == 0)
         {
@@ -71,13 +92,6 @@ class Core
         {
             echo '404';
             //throw new Exception('The class '. $controller .' does not exist.');
-        }
-
-        /* Routeur Statique */
-
-        if ($route = Router::get($virginLink) !== null)
-        {
-            echo ' custom route found ';
         }
     }
 }
