@@ -12,19 +12,25 @@ class UserController extends \Core\Controller
     public function addAction()
     {
         //echo '<br> addAction de la class User : salut bravo bg <br><br> hop';
-        $this->view = 'login';
+        $this->view = 'register';
     }
     public function registerAction()
     {
-        $UserModel = new UserModel();
-        var_dump($_POST);
-        $this->view = 'register';
+        $this->email = $_POST['email-form-register'];
+        //$UserModel->email = $this->email;
+        $this->password = $_POST['password-form-register'];
+        $UserModel = new \Model\UserModel($this->email, $this->password);
+        $save = $UserModel->save();
+        $this->view = 'show';
+        //$this->scope = [$UserModel->getEmail()];
+        //$this->scope = [\Model\UserModel::__setEmail($this->email), \Model\UserModel::__getEmail()];
     }
 
     public function __destruct()
     {
         isset($this->view) ? $this->view : $this->view = 'index';
-        echo $this->render($this->view);
+        isset($this->scope) ? $this->scope : $this->scope = [];
+        echo $this->render($this->view, $this->scope);
 
     }
 

@@ -7,6 +7,19 @@ class UserModel extends \Core\Database
     private $email;
     private $password;
 
+    public function __construct($email, $password)
+    {
+        $this->email = $email;
+        $this->password = $password;
+    }
+    // public function getEmail()
+    // {
+    //     return $this->email;
+    // }
+    // public function getPassword()
+    // {
+    //     return $this->password;
+    // }
     private function executeAndReturn($sql, $value) 
     {
         $stmt = $this->connect()->prepare($sql);
@@ -17,7 +30,7 @@ class UserModel extends \Core\Database
 
     public function save()
     {
-        $sql = "UPDATE users SET email = ? AND password = ?";
+        $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->email, $this->password]);
     }
