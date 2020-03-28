@@ -16,14 +16,49 @@ class UserController extends \Core\Controller
     }
     public function registerAction()
     {
-        $this->email = $_POST['email-form-register'];
-        //$UserModel->email = $this->email;
-        $this->password = $_POST['password-form-register'];
-        $UserModel = new \Model\UserModel($this->email, $this->password);
-        $save = $UserModel->save();
-        $this->view = 'show';
-        //$this->scope = [$UserModel->getEmail()];
-        //$this->scope = [\Model\UserModel::__setEmail($this->email), \Model\UserModel::__getEmail()];
+        if (isset($_POST['email-form-register']) && isset($_POST['password-form-register']))
+        {
+            $this->email = $_POST['email-form-register'];
+            $this->password = $_POST['password-form-register'];
+            $UserModel = new \Model\UserModel($this->email, $this->password);
+            $UserModel->save();
+            $this->view = 'show';
+            unset($UserModel);
+            //$this->scope = [$UserModel->getEmail()];
+        }
+        else
+        {
+            echo '404';
+        }
+    }
+    public function loginAction()
+    {
+        $this->view = 'login';
+    }
+    public function loginUserAction()
+    {
+        if (isset($_POST['email-form-login']) && isset($_POST['password-form-login']))
+        {
+            $this->email = $_POST['email-form-login'];
+            $this->password = $_POST['password-form-login'];
+            $UserModel = new \Model\UserModel($this->email, $this->password);
+            $connexion = $UserModel->connexion();
+            if (isset($connexion[0]) == true)
+            {
+                echo 'connexion réussi';
+            }
+            else
+            {
+                echo '404';
+            }
+            $this->view = 'show';
+            unset($UserModel);
+             //$this->scope = [$UserModel->connexion()];
+        }
+        else
+        {
+            echo '404';
+        }
     }
 
     public function __destruct()
