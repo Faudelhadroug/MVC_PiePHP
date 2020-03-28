@@ -4,6 +4,13 @@ namespace Controller;
 
 class UserController extends \Core\Controller
 {
+    private $Request;
+
+    public function __construct()
+    {
+        $this->Request = new \Core\Request();
+        //$this->Request->POST
+    }
     public function indexAction()
     {
         echo '<br> IndexAction de la class User : sexy mec <br><br>';
@@ -16,12 +23,14 @@ class UserController extends \Core\Controller
     }
     public function registerAction()
     {
-        if (isset($_POST['email-form-register']) && isset($_POST['password-form-register']))
+        var_dump($this->Request->POST);
+        if (isset($this->Request->POST['email-form-register']) && isset($this->Request->POST['password-form-register']))
         {
-            $this->email = $_POST['email-form-register'];
-            $this->password = $_POST['password-form-register'];
+            $this->email = $this->Request->POST['email-form-register'];
+            $this->password = $this->Request->POST['password-form-register'];
             $UserModel = new \Model\UserModel($this->email, $this->password);
-            $UserModel->save();
+            //$UserModel->save();
+            echo $UserModel->create($this->email, $this->password)[0]['id'];
             $this->view = 'show';
             unset($UserModel);
             //$this->scope = [$UserModel->getEmail()];
@@ -37,10 +46,10 @@ class UserController extends \Core\Controller
     }
     public function loginUserAction()
     {
-        if (isset($_POST['email-form-login']) && isset($_POST['password-form-login']))
+        if (isset($this->Request->POST['email-form-login']) && isset($this->Request->POST['password-form-login']))
         {
-            $this->email = $_POST['email-form-login'];
-            $this->password = $_POST['password-form-login'];
+            $this->email = $this->Request->POST['email-form-login'];
+            $this->password = $this->Request->POST['password-form-login'];
             $UserModel = new \Model\UserModel($this->email, $this->password);
             $connexion = $UserModel->connexion();
             if (isset($connexion[0]) == true)
