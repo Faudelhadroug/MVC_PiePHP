@@ -4,6 +4,14 @@ namespace Core;
 
 class ORM extends \Core\Database
 {
+    protected function executeAndReturn($sql, $value, $value2) 
+    {
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$value, $value2]);
+        $results = $stmt->fetchAll();
+        return $results;
+    }
+    
     public function create($table, $fields)
     {
         $column = '';
@@ -20,19 +28,26 @@ class ORM extends \Core\Database
             {
                 $values .= ', ';
                 $inValues .= ", ";
-            }
-                
-                
+            }           
         }
         $values = explode(',', $values);
        
         $sql = "INSERT INTO $table ($column) VALUES ($inValues)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute($values);
-
+        $sql = "SELECT MAX(id) as 'id' FROM $table";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        return $results[0]['id'];
     }
     public function read($table, $id)
     {
+        $sql = "SELECT * from $table WHERE id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id]);
+        $results = $stmt->fetchAll();
+        return $results[0];
 
     }
     public function update($table, $id, $fields)

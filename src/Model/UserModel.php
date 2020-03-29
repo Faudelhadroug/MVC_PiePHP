@@ -2,13 +2,13 @@
 
 namespace Model;
 
-class UserModel extends \Core\Database
+class UserModel extends \Core\ORM
 {
     private $email;
     private $password;
     private $connexionDb;
 
-    public function __construct($email, $password)
+    public function __construct($email = '', $password = '') 
     {
         $this->email = $email;
         $this->password = $password;
@@ -22,21 +22,20 @@ class UserModel extends \Core\Database
     // {
     //     return $this->password;
     // }
-    private function executeAndReturn($sql, $value, $value2) 
-    {
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$value, $value2]);
-        $results = $stmt->fetchAll();
-        return $results;
-    }
-    public function create()
-    {
-        $orm = new \Core\ORM();
-        $orm->create('users', array(
-            'email' => $this->email,
-            'password' => $this->password,
-        ));
 
+    public function createUser()
+    {
+        $id = $this->create('users', array(
+            'email' => $this->email,
+            'password' => $this->password
+        ));
+        return $id;
+        //return var_dump($a);
+    }
+    public function readUser()
+    {
+        $read = $this->read('users', 1);
+        return $read;
     }
     public function save()
     {
@@ -48,7 +47,10 @@ class UserModel extends \Core\Database
     public function connexion()
     {
         $sql = "SELECT * from users WHERE email = ? and password = ?";
-        return $this->executeAndReturn($sql, $this->email, $this->password);
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$value, $value2]);
+        $results = $stmt->fetchAll();
+        return $results;
     }
 
 }

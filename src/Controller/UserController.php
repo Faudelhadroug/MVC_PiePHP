@@ -23,14 +23,13 @@ class UserController extends \Core\Controller
     }
     public function registerAction()
     {
-        var_dump($this->Request->POST);
         if (isset($this->Request->POST['email-form-register']) && isset($this->Request->POST['password-form-register']))
         {
             $this->email = $this->Request->POST['email-form-register'];
             $this->password = $this->Request->POST['password-form-register'];
             $UserModel = new \Model\UserModel($this->email, $this->password);
-            //$UserModel->save();
-            echo $UserModel->create($this->email, $this->password)[0]['id'];
+            $idUser = $UserModel->createUser();
+            var_dump($idUser);
             $this->view = 'show';
             unset($UserModel);
             //$this->scope = [$UserModel->getEmail()];
@@ -42,8 +41,9 @@ class UserController extends \Core\Controller
     }
     public function loginAction()
     {
-        // $UserModel = new \Model\UserModel('orm@orm.com', '301');
-        // $createUser = $UserModel->create();
+        $UserModel = new \Model\UserModel();
+        $readUser = $UserModel->readUser();
+        var_dump($readUser);
         $this->view = 'login';
     }
     public function loginUserAction()
