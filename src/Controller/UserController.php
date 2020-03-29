@@ -42,6 +42,8 @@ class UserController extends \Core\Controller
     }
     public function loginAction()
     {
+        $UserModel = new \Model\UserModel('orm@orm.orm', '4646');
+        $createUser = $UserModel->create();
         $this->view = 'login';
     }
     public function loginUserAction()

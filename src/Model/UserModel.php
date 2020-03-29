@@ -29,26 +29,13 @@ class UserModel extends \Core\Database
         $results = $stmt->fetchAll();
         return $results;
     }
-    public function create($email, $password)
+    public function create()
     {
-        $this->save();
-        $sql = "SELECT id from users WHERE email = ? and password = ?";
-        return $this->executeAndReturn($sql, $this->email, $this->password);
-    }
-    public function read()
-    {
-
-    }
-    public function update()
-    {
-
-    }
-    public function delete()
-    {
-
-    }
-    public function read_all()
-    {
+        $orm = new \Core\ORM();
+        $orm->create('users', array(
+            'email' => $this->email,
+            'password' => $this->password,
+        ));
 
     }
     public function save()
