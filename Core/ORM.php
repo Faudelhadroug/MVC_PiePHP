@@ -52,11 +52,26 @@ class ORM extends \Core\Database
     }
     public function update($table, $id, $fields)
     {
-
+        $setValue = '';
+        foreach($fields as $key => $value)
+        {
+            $setValue .= "$key = '$value'";
+            if (array_key_last($fields) !== $key)
+                $setValue .= ",\n";       
+        }
+        $sql = "UPDATE $table SET $setValue  where id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $result = $stmt->execute([$id]);
+        $result = $result == true ? true : false;
+        return $result;
     }
     public function delete($table, $id)
     {
-
+        $sql = "DELETE FROM $table WHERE id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $result = $stmt->execute([$id]);
+        $result = $result == true ? true : false;
+        return $result;
     }
     public function find($table, $params = array(
         'WHERE' => '1',

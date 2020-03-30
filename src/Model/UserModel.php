@@ -37,6 +37,19 @@ class UserModel extends \Core\ORM
         $read = $this->read('users', 1);
         return $read;
     }
+    public function updateUser()
+    {
+        $update = $this->update('users', 1, array(
+            'email' => 'choco@blackos.com',
+            'password' => 'mamadou'
+        ));
+        return $update;
+    }
+    public function deleteUser()
+    {
+        $delete = $this->delete('users', 3);
+        return $delete;
+    }
     public function save()
     {
         $sql = "INSERT INTO users (email, password) VALUES (?, ?)";

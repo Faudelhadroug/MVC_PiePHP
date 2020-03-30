@@ -42,9 +42,14 @@ class UserController extends \Core\Controller
     public function loginAction()
     {
         $UserModel = new \Model\UserModel();
-        $readUser = $UserModel->readUser();
-        var_dump($readUser);
+        // $deleteUser = $UserModel->deleteUser();
+        // var_dump($deleteUser);
+        // $updateUser = $UserModel->updateUser();
+        // var_dump($updateUser);
+        // $readUser = $UserModel->readUser();
+        // var_dump($readUser);
         $this->view = 'login';
+        unset($UserModel);
     }
     public function loginUserAction()
     {
