@@ -4,8 +4,6 @@ namespace Core;
 
 class ORM
 {
-    //construct pour simpler la connexion db
-    
     public function create($table, $fields)
     {
         $column = '';
