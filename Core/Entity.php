@@ -13,13 +13,14 @@ class Entity
         $table = strtolower(substr($table[1], 0, -strlen($table[0]))) . 's';
         if (array_key_exists('id', $params))
         {
+            $fields = $params;
             $params = ORM::read($table, $params['id']);
             if ($params !== null)
                 foreach ($params as $key => $value)
                 {
                     $this->$key = $value;
                 }
-            unset($params['id']);
+            unset($fields['id']);
         }
         else
         {
@@ -27,14 +28,16 @@ class Entity
             {
                 $this->$key = $value;
             }
+            $fields = $params;
         }
+        $this->fields = $fields;
         $this->params = $params;
         $this->class = $class;
         $this->table = $table;
     }
     public function create()
     {
-       $id = ORM::create($this->table, $this->params);
+       $id = ORM::create($this->table, $this->fields);
        return $id;
     }
     public function read()
@@ -48,7 +51,7 @@ class Entity
     {
         if (!isset($this->id))
             return false;
-        $update = ORM::update($this->table, $this->id, $this->params);
+        $update = ORM::update($this->table, $this->id, $this->fields);
         return $update;
     }
     public function delete()

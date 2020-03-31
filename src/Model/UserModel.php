@@ -16,9 +16,9 @@ class UserModel extends \Core\Entity
 
     public function connexion()
     { 
-        $sql = "SELECT * from $this->table WHERE email = ? and password = ?";
+        $sql = "SELECT * from $this->table WHERE email = ?";
         $stmt = $this->connectDb->prepare($sql);
-        $stmt->execute([$this->email, $this->password]);
+        $stmt->execute([$this->email]);
         $results = $stmt->fetchAll();
         var_dump($results);
         return $results;
