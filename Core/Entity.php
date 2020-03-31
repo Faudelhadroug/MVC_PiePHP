@@ -69,4 +69,9 @@ class Entity
         $find = ORM::find($this->table, $this->fields);
         return $find;
     }
+    public function read_all()
+    {
+        $readAll = ORM::read_all($this->table);
+        return $readAll;
+    }
 }

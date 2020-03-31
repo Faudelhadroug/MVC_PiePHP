@@ -68,6 +68,15 @@ class ORM
         $result = $result == true ? true : false;
         return $result;
     }
+    public function read_all($table)
+    {
+        $sql = "SELECT * from $table";
+        $stmt = \Core\Database::connect()->prepare($sql);
+        $stmt->execute([$id]);
+        $results = $stmt->fetchAll();
+        if(isset($results[0]))
+            return $results[0];
+    }
     public function find($table, $params = array(
         'WHERE' => ['id' => '1'],
         'ORDER BY' => 'id ASC',
