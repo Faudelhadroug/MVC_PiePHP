@@ -39,6 +39,11 @@ class UserController extends \Core\Controller
     {
         $this->view = 'login';
         unset($UserModel);
+        /*       
+         $UserModel = new \Model\UserModel(['email' => 'workfine@bg.tkt', 'password' => 'secret']);
+        $find = $UserModel->connexion();
+        var_dump($find); 
+        */
     }
     public function loginUserAction()
     {
@@ -46,8 +51,8 @@ class UserController extends \Core\Controller
         {
             $UserModel = new \Model\UserModel($this->Request->POST);
             $connexion = $UserModel->connexion();
-            //var_dump($connexion);
-            if (isset($connexion[0]) == true)
+
+            if (isset($connexion) == true)
             {
                 echo 'connexion réussi';
             }

@@ -69,11 +69,45 @@ class ORM
         return $result;
     }
     public function find($table, $params = array(
-        'WHERE' => '1',
+        'WHERE' => ['id' => '1'],
         'ORDER BY' => 'id ASC',
-        'LIMIT' => ''
+        'LIMIT' => '' 
     ))
     {
+        $toInject = '';
+        foreach($params as $key => $value)
+        {
+            if (is_array($value))
+            {
+                if ($key == 'LIMIT')
+                    $toInject .= "$key ";
+                foreach($value as $keyVal => $val)
+                {
+                    if($key == 'WHERE')
+                        $toInject .= "$keyVal = '$val' ";
+                    elseif($key == 'LIMIT')
+                        $toInject .= "$val, ";
+                    else
+                        $toInject .= "$keyVal = '$val' ";
+                }
+                if ($key == 'LIMIT')
+                    $toInject = substr($toInject, 0, -2);
+            }
+            elseif($value == 'AND' || $value == 'OR')
+                $toInject .= "$value ";
+            else
+            {
+                if ($key == 'LIMIT' && $value == '')
+                    $value = 1;
+                $toInject .= "$key $value ";
+            }
+        }
 
-    }
+        $sql = "SELECT * from $table WHERE $toInject";
+        $stmt = \Core\Database::connect()->prepare($sql);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        if(isset($results[0]))
+            return $results[0];
+    }   
 }

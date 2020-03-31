@@ -18,6 +18,7 @@ class Entity
             if ($params !== null)
                 foreach ($params as $key => $value)
                 {
+                    $key = str_replace(' ', '', $key);
                     $this->$key = $value;
                 }
             unset($fields['id']);
@@ -26,6 +27,7 @@ class Entity
         {
             foreach ($params as $key => $value)
             {
+                $key = str_replace(' ', '', $key);
                 $this->$key = $value;
             }
             $fields = $params;
@@ -44,8 +46,8 @@ class Entity
     {
         if (!isset($this->id))
             return 'error ID';
-        $results = ORM::read($this->table, $this->id);
-        return $results;
+        $read = ORM::read($this->table, $this->id);
+        return $read;
     }
     public function update()
     {
@@ -62,12 +64,9 @@ class Entity
         return $delete;
         
     }
-    public function find($table, $params = array(
-        'WHERE' => '1',
-        'ORDER BY' => 'id ASC',
-        'LIMIT' => ''
-    ))
+    public function find()
     {
-
+        $find = ORM::find($this->table, $this->fields);
+        return $find;
     }
 }

@@ -16,12 +16,15 @@ class UserModel extends \Core\Entity
 
     public function connexion()
     { 
-        $sql = "SELECT * from $this->table WHERE email = ?";
-        $stmt = $this->connectDb->prepare($sql);
-        $stmt->execute([$this->email]);
-        $results = $stmt->fetchAll();
-        var_dump($results);
-        return $results;
+        $this->fields =
+        [ 
+            'WHERE' => ['email' => $this->email],
+            'AND',
+            ['password' => $this->password],
+            'ORDER BY' => 'id ASC',
+            'LIMIT' => ''];
+        $result = $this->find();
+        return $result;
     }
 
 }
