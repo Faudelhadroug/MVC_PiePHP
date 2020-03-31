@@ -23,16 +23,12 @@ class UserController extends \Core\Controller
     }
     public function registerAction()
     {
-        if (isset($this->Request->POST['email-form-register']) && isset($this->Request->POST['password-form-register']))
+        if (isset($this->Request->POST['email']) && isset($this->Request->POST['password']))
         {
-            $this->email = $this->Request->POST['email-form-register'];
-            $this->password = $this->Request->POST['password-form-register'];
-            $UserModel = new \Model\UserModel($this->email, $this->password);
-            $idUser = $UserModel->createUser();
-            var_dump($idUser);
+            $UserModel = new \Model\UserModel($this->Request->POST);
+            $idUser = $UserModel->create();
             $this->view = 'show';
             unset($UserModel);
-            //$this->scope = [$UserModel->getEmail()];
         }
         else
         {
@@ -41,24 +37,16 @@ class UserController extends \Core\Controller
     }
     public function loginAction()
     {
-        $UserModel = new \Model\UserModel();
-        // $deleteUser = $UserModel->deleteUser();
-        // var_dump($deleteUser);
-        // $updateUser = $UserModel->updateUser();
-        // var_dump($updateUser);
-        // $readUser = $UserModel->readUser();
-        // var_dump($readUser);
         $this->view = 'login';
         unset($UserModel);
     }
     public function loginUserAction()
     {
-        if (isset($this->Request->POST['email-form-login']) && isset($this->Request->POST['password-form-login']))
+        if (isset($this->Request->POST['email']) && isset($this->Request->POST['password']))
         {
-            $this->email = $this->Request->POST['email-form-login'];
-            $this->password = $this->Request->POST['password-form-login'];
-            $UserModel = new \Model\UserModel($this->email, $this->password);
+            $UserModel = new \Model\UserModel($this->Request->POST);
             $connexion = $UserModel->connexion();
+            //var_dump($connexion);
             if (isset($connexion[0]) == true)
             {
                 echo 'connexion réussi';
