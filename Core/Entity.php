@@ -8,6 +8,7 @@ class Entity
     
     public function __construct($params)
     {
+        new ORM();
         $class = get_class($this); // il faut rajouter le s
         $table = explode('\\', $class);
         $table = strtolower(substr($table[1], 0, -strlen($table[0]))) . 's';

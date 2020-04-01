@@ -14,7 +14,6 @@ function autoLoad($class)
         'src',
         'src/Model',
         'src/Controller',
-        'src/View'
     ];
     for ($i=0; $i < count($arrayPath); $i++) 
     { 

@@ -33,7 +33,7 @@ class Core
             $routageDynamique = $this->Dynamique();
         }
     }
-    protected function Dynamique()
+    private function Dynamique()
     {
         $baseLinkCount = strlen('/github/MVC_PiePHP/');
         $virginLink = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCount));
