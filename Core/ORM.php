@@ -83,14 +83,14 @@ class ORM
         if(isset($results[0]))
             return $results[0];
     }
-    public static function find($table, $params = array(
+    public static function find($table, $condition = array(
         'WHERE' => ['id' => '1'],
         'ORDER BY' => 'id ASC',
         'LIMIT' => '' 
     ))
     {
         $toInject = '';
-        foreach($params as $key => $value)
+        foreach($condition as $key => $value)
         {
             if (is_array($value))
             {

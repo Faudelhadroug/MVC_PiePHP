@@ -1,14 +1,14 @@
 <?php
 
 namespace Core;
-
 class Entity
 {
     //private $connexionDb;
     
     public function __construct($params)
     {
-        new ORM();
+        new \Core\ORM();
+        // $ORM->__construct();
         $class = get_class($this); // il faut rajouter le s
         $table = explode('\\', $class);
         $table = strtolower(substr($table[1], 0, -strlen($table[0]))) . 's';
@@ -64,11 +64,6 @@ class Entity
         $delete = ORM::delete($this->table, $this->id);
         return $delete;
         
-    }
-    public function find()
-    {
-        $find = ORM::find($this->table, $this->fields);
-        return $find;
     }
     public function read_all()
     {

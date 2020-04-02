@@ -21,7 +21,7 @@ function autoLoad($class)
         { 
             //$arrayPath[$i].DIRECTORY_SEPARATOR.$classpath
             $classpath = $arrayPath[$i].DIRECTORY_SEPARATOR.$classpath;
-            include $classpath;
+            require_once $classpath;
             return;
         }
         // elseif (file_exists(str_replace('\\', '/', $classpath)))

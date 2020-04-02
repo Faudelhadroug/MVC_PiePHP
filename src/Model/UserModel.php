@@ -12,18 +12,27 @@ class UserModel extends \Core\Entity
 
         $this->connectDb = $connectDb;
     }
-    
 
+    public function find()
+    {
+        // if(isset($this->id))
+        //     var_dump($this->id);
+        $find = \Core\ORM::find($this->table, $condition = array(
+            'WHERE' => ['id' => '1'],
+            'ORDER BY' => 'id ASC',
+            'LIMIT' => '' 
+        ));
+        return $find;
+    }
     public function connexion()
     { 
-        $this->fields =
-        [ 
+        $result = \Core\ORM::find($this->table, $condition = array(
             'WHERE' => ['email' => $this->email],
             'AND',
             ['password' => $this->password],
             'ORDER BY' => 'id ASC',
-            'LIMIT' => ''];
-        $result = $this->find();
+            'LIMIT' => ''
+        ));
         return $result;
     }
 
