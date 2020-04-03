@@ -5,6 +5,8 @@ namespace Model;
 class UserModel extends \Core\Entity
 {
     public $connectDb;
+    private static $relations;
+    
     public function __construct($params) 
     {
         parent::__construct($params);
