@@ -6,15 +6,7 @@ class UserModel extends \Core\Entity
 {
     public $connectDb;
     private static $relations;
-    
-    public function __construct($params) 
-    {
-        parent::__construct($params);
-        $connectDb = \Core\Database::connect();
-
-        $this->connectDb = $connectDb;
-    }
-
+   
     public function find()
     {
         // if(isset($this->id))

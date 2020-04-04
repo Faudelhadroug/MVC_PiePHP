@@ -1,18 +1,20 @@
 <?php
 
 namespace Core;
+
 class Entity
 {
     //private $connexionDb;
-    
-    public function __construct($params)
+    public static $class;
+    public function __construct($params = null)
     {
         new \Core\ORM();
+        $connectDb = \Core\Database::connect();
         // $ORM->__construct();
-        $class = get_class($this); // il faut rajouter le s
+        $class = get_class($this); 
         $table = explode('\\', $class);
         $table = strtolower(substr($table[1], 0, -strlen($table[0]))) . 's';
-        if (array_key_exists('id', $params))
+        if ($params !== null && array_key_exists('id', $params))
         {
             $fields = $params;
             $params = ORM::read($table, $params['id']);
@@ -26,17 +28,27 @@ class Entity
         }
         else
         {
-            foreach ($params as $key => $value)
+            if ( $params !== null)
             {
-                $key = str_replace(' ', '', $key);
-                $this->$key = $value;
+                foreach ($params as $key => $value)
+                {
+                    $key = str_replace(' ', '', $key);
+                    $this->$key = $value;
+                }
+                $fields = $params;
+                $this->fields = $fields;
             }
-            $fields = $params;
+
         }
-        $this->fields = $fields;
+        $this->connectDb = $connectDb;
+      
         $this->params = $params;
-        $this->class = $class;
+        $this->$class = $class; 
         $this->table = $table;
+        if ($params == null)
+        {
+            return;
+        }
     }
     public function create()
     {

@@ -21,6 +21,11 @@ class UserController extends \Core\Controller
         //echo '<br> addAction de la class User : salut bravo bg <br><br> hop';
         $this->view = 'register';
     }
+    public function loginIdAction()
+    {
+        echo 'vu ID';
+        $this->view = 'show';  
+    }
     public function registerAction()
     {
         if (isset($this->Request->POST['email']) && isset($this->Request->POST['password']))
@@ -37,6 +42,10 @@ class UserController extends \Core\Controller
     }
     public function loginAction()
     {
+        $UserModel = new \Model\UserModel([]);
+        $read = $UserModel->read_all();
+        echo '<pre>';
+        echo '</pre>';
         $this->view = 'login';
         unset($UserModel);
         /*       

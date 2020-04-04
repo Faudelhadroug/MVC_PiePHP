@@ -5,6 +5,7 @@ Core\Router::connect('/', ['controller' => 'app', 'action' => 'index']);
 Core\Router::connect('/register', ['controller' => 'user', 'action' => 'add']);
 Core\Router::connect('/register/save', ['controller' => 'user', 'action' => 'register']);
 /* LOGIN */
+Core\Router::connect('/login/{id}', ['controller' => 'user', 'action' => 'loginId']);
 Core\Router::connect('/login', ['controller' => 'user', 'action' => 'login']);
 Core\Router::connect('/login/connexion', ['controller' => 'user', 'action' => 'loginUser']);
 /* 42 */
