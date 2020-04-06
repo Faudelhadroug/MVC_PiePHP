@@ -42,10 +42,6 @@ class UserController extends \Core\Controller
     }
     public function loginAction()
     {
-        $UserModel = new \Model\UserModel([]);
-        $read = $UserModel->read_all();
-        echo '<pre>';
-        echo '</pre>';
         $this->view = 'login';
         unset($UserModel);
         /*       

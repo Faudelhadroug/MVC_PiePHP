@@ -25,6 +25,7 @@ class Entity
                     $this->$key = $value;
                 }
             unset($fields['id']);
+            $this->fields = $fields;
         }
         else
         {
