@@ -16,17 +16,35 @@ class Core
         $baseLinkCountStatic = strlen('/github/MVC_PiePHP');
         $virginLinkStatic = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCountStatic));
        
-        /* Routeur Statique & Dynamique */
+        /* Routeur */
         
         if ($route = Router::get($virginLinkStatic) !== null)   // Routage statique
         {
-
-            $class = Router::get($virginLinkStatic)['controller'];
-            $action = Router::get($virginLinkStatic)['action'];
-            $controller = 'Controller\\'.ucfirst(($class)).'Controller';
-            $doAction = $action.'Action';
-            $object = new $controller();
-            $object->$doAction();
+            if(array_key_exists('route', Router::get($virginLinkStatic)) == true) // Routeur paramétrique
+            {
+                $class = Router::get($virginLinkStatic)['route']['controller'];
+                $action = Router::get($virginLinkStatic)['route']['action'];
+                $controller = 'Controller\\'.ucfirst(($class)).'Controller';
+                $doAction = $action.'Action';
+                $object = new $controller();
+                if ($action == 'delete')
+                {
+                    $id = Router::get($virginLinkStatic)['id'];
+                    $object->$doAction($id);
+                }
+                
+            }
+            else // Routeur statique
+            {
+                $class = Router::get($virginLinkStatic)['controller'];
+                $action = Router::get($virginLinkStatic)['action'];
+                $controller = 'Controller\\'.ucfirst(($class)).'Controller';
+                $doAction = $action.'Action';
+                $object = new $controller();
+                $object->$doAction();
+            }
+            
+            
         }
         else    // Routage dynamique
         {

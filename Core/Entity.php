@@ -42,7 +42,6 @@ class Entity
 
         }
         $this->connectDb = $connectDb;
-      
         $this->params = $params;
         $this->$class = $class; 
         $this->table = $table;

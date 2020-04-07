@@ -46,7 +46,7 @@ class ORM
         $sql = "SELECT * from $table WHERE id = ?";
         $stmt = self::$dbConnect->prepare($sql);
         $stmt->execute([$id]);
-        $results = $stmt->fetchAll(/*\PDO::FETCH_CLASS, "\Model\\".substr($table, 0 , -1)."Model"*/);
+        $results = $stmt->fetchAll(\PDO::FETCH_CLASS, "\Model\\".substr($table, 0 , -1)."Model");
         if(isset($results[0]))
             return $results[0];
 
