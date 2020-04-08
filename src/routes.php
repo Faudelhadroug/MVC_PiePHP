@@ -7,7 +7,8 @@ Core\Router::connect('/register/save', ['controller' => 'user', 'action' => 'reg
 /* LOGIN */
 Core\Router::connect('/login', ['controller' => 'user', 'action' => 'login']);
 Core\Router::connect('/login/connexion', ['controller' => 'user', 'action' => 'loginUser']);
-/* DELETE USER */
+/* USER */
 Core\Router::connect('/delete/{id}', ['controller' => 'user', 'action' => 'delete']);
+Core\Router::connect('/user/details/{id}', ['controller' => 'user', 'action' => 'details']);
 /* 42 */
 Core\Router::connect('/user/42', ['controller' => 'user', 'action' => 'caca']);

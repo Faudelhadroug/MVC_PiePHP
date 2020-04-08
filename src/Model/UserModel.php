@@ -5,7 +5,11 @@ namespace Model;
 class UserModel extends \Core\Entity
 {
     public $connectDb;
-    private static $relations;
+    public $relations = [
+        "has_many" => [array("table" => "article", "key" => "user_id")],
+        "has_one" => [array("table" => "promo", "key" => "promo_id")],
+        "many_to_many" => [array("table1" => "user", "table2" => "color")]
+    ];
    
     public function find()
     {

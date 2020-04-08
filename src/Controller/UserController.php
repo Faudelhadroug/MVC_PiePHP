@@ -89,6 +89,15 @@ class UserController extends \Core\Controller
         }
     }
 
+    public function detailsAction($id)
+    {
+        $UserModel = new \Model\UserModel(['id' => $id]);
+        echo '<pre>';
+        var_dump($UserModel->relations['has_many']);
+        echo '</pre>';
+        $this->view = 'details'; 
+        //$this->scope = ['msg' => $msg]; 
+    }
     public function __destruct()
     {
         isset($this->view) ? $this->view : $this->view = 'index';

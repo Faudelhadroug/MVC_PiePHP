@@ -27,7 +27,7 @@ class Core
                 $controller = 'Controller\\'.ucfirst(($class)).'Controller';
                 $doAction = $action.'Action';
                 $object = new $controller();
-                if ($action == 'delete')
+                if ($action == 'delete' || $action == 'details')
                 {
                     $id = Router::get($virginLinkStatic)['id'];
                     $object->$doAction($id);
@@ -48,7 +48,19 @@ class Core
         }
         else    // Routage dynamique
         {
-            $routageDynamique = $this->Dynamique();
+            $pathParametrique = ['/delete/', '/user/details/'];
+            $i = 0;
+            $access = true;
+            while ($i !== count($pathParametrique))
+            {
+                if ($virginLinkStatic == $pathParametrique[$i])
+                    $access = null;
+                $i++;
+            }
+            if ($access !== null)
+                $routageDynamique = $this->Dynamique();
+            else
+                echo 'Erreur argument';
         }
     }
     private function Dynamique()

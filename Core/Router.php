@@ -16,10 +16,19 @@ class Router
         // var_dump($verifURLS);
         // echo '</pre>';
         $patternID = '/^\d+$|^[?]{1}$/' ;// '/^\d+$/';
+
         if(isset($verifURLS[1]) == 'delete' && isset($verifURLS[2]) && preg_match($patternID, $verifURLS[2]) == true)
         {
             $url = '/delete/{id}';
             $id = $verifURLS[2];
+            if ($id == '?')
+                $id = 42;
+            return ['route' => self::$routes[$url], 'id' => $id];
+        }
+        if(isset($verifURLS[1]) == 'user' && isset($verifURLS[2]) == 'details' && isset($verifURLS[3]) && preg_match($patternID, $verifURLS[3]) == true)
+        {
+            $url = '/user/details/{id}';
+            $id = $verifURLS[3];
             if ($id == '?')
                 $id = 42;
             return ['route' => self::$routes[$url], 'id' => $id];
