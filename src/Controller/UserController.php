@@ -93,7 +93,8 @@ class UserController extends \Core\Controller
     {
         $UserModel = new \Model\UserModel(['id' => $id]);
         echo '<pre>';
-        var_dump($UserModel->relations['has_many']);
+        //var_dump($UserModel->relations['has_many']);
+        var_dump($UserModel->articles[1]->id);
         echo '</pre>';
         $this->view = 'details'; 
         //$this->scope = ['msg' => $msg]; 

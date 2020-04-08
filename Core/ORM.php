@@ -46,7 +46,7 @@ class ORM
         $sql = "SELECT * from $table WHERE id = ?";
         $stmt = self::$dbConnect->prepare($sql);
         $stmt->execute([$id]);
-        $results = $stmt->fetchAll(\PDO::FETCH_CLASS, "\Model\\".substr($table, 0 , -1)."Model");
+        $results = $stmt->fetchAll(\PDO::FETCH_CLASS, "\Model\\".substr(ucfirst($table), 0 , -1)."Model");
         if(isset($results[0]))
             return $results[0];
 
@@ -79,7 +79,7 @@ class ORM
         $sql = "SELECT * from $table";
         $stmt = self::$dbConnect->prepare($sql);
         $stmt->execute();
-        $results = $stmt->fetchAll(\PDO::FETCH_CLASS, "\Model\\".substr($table, 0 , -1)."Model");
+        $results = $stmt->fetchAll(\PDO::FETCH_CLASS, "\Model\\".substr(ucfirst($table), 0 , -1)."Model");
         //var_dump(Entity::$class);
         //$results = $stmt->fetchObject(Entity::$class);
            
@@ -104,7 +104,7 @@ class ORM
                 {
                     if($key == 'WHERE')
                         $toInject .= "$keyVal = '$val' ";
-                    elseif($key == 'LIMIT')
+                    elseif($key == 'LIMIT' && $val !== '')
                         $toInject .= "$val, ";
                     else
                         $toInject .= "$keyVal = '$val' ";
@@ -117,7 +117,11 @@ class ORM
             else
             {
                 if ($key == 'LIMIT' && $value == '')
-                    $value = 1;
+                {
+                    $key = '';
+                    $value = '';
+                }
+                    
                 $toInject .= "$key $value ";
             }
         }
@@ -126,7 +130,7 @@ class ORM
         $stmt = self::$dbConnect->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll();
-        if(isset($results[0]))
-            return $results[0];
+        if(isset($results))
+            return $results;
     }   
 }
