@@ -32,7 +32,6 @@ class Core
                     $id = Router::get($virginLinkStatic)['id'];
                     $object->$doAction($id);
                 }
-                
             }
             else // Routeur statique
             {

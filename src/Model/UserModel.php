@@ -10,7 +10,6 @@ class UserModel extends \Core\Entity
         "has_one" => [array("table" => "promo", "key" => "promo_id")],
         "many_to_many" => [array("table1" => "user", "table2" => "color")]
     ];
-   
     public function find()
     {
         // if(isset($this->id))

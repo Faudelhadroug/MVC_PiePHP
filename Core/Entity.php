@@ -13,50 +13,48 @@ class Entity
         $class = get_class($this); 
         $table = explode('\\', $class);
         $table = strtolower(substr($table[1], 0, -strlen($table[0]))) . 's';
-        
         if ($params !== null && array_key_exists('id', $params))
         {
             if (isset($this->relations['has_many']))
             {
-               //var_dump($params['id']);
-               //var_dump($table);
                $idToSearch = substr($table, 0 , -1).'_id';
-                echo '<pre> Has many ';
-                var_dump($this->relations['has_many'][0]['table']);
-                echo '</pre>';
-                $finds = \Core\ORM::find($this->relations['has_many'][0]['table'].'s', $condition = array(
-                    'WHERE' => ["$idToSearch" => $params['id']],
-                    'ORDER BY' => 'id ASC',
-                    'LIMIT' => '' 
-                ));
-                $nameTable = $this->relations['has_many'][0]['table'].'s';
-                //return var_dump($finds[0]);
-
-                $relationsTable = [];
-                foreach($finds as $find)
+                for ($i = 0; $i !== count($this->relations['has_many']); $i++)
                 {
-                    //var_dump($find['id']);
-                    $read = ORM::read($this->relations['has_many'][0]['table'].'s', $find['id']);
-                    // echo '<pre>';
-                    // var_dump($read);
-                    // echo '</pre>';
-                    array_push($relationsTable, $read);
-                    //$this->$relationsTable = $read;
-                    //echo "<br> $find <br>";
+
+                    $finds = \Core\ORM::find($this->relations['has_many'][$i]['table'].'s', $condition = array(
+                        'WHERE' => ["$idToSearch" => $params['id']],
+                        'ORDER BY' => 'id ASC',
+                        'LIMIT' => '' 
+                    ));
+                    $nameTable = $this->relations['has_many'][$i]['table'].'s';
+
+                    $relationsTable = [];
+                    foreach($finds as $find)
+                    {
+                        $read = ORM::read($this->relations['has_many'][$i]['table'].'s', $find['id']);
+                        array_push($relationsTable, $read);
+                    }
+                    $this->$nameTable = $relationsTable;
                 }
-                $this->$nameTable = $relationsTable;
-          
-                // echo '<pre>';
-                // var_dump($this->articles);
-                // echo '</pre>';
-                return;
     
             }
             if (isset($this->relations['has_one']))
             {
-                echo '<pre> Has one ';
-                var_dump($this->relations['has_one']);
-                echo '</pre>';
+                $idToSearch = substr($table, 0 , -1).'_id';
+                for ($i = 0; $i !== count($this->relations['has_many']); $i++)
+                {
+                    $keyToSearch = $this->relations['has_one'][$i]['key'];
+                    $find = \Core\ORM::find($table, $condition = array(
+                        'WHERE' => ['id' => $params['id']],
+                        'ORDER BY' => 'id ASC',
+                        'LIMIT' => '' 
+                    ));
+                    $find[$i][$keyToSearch];
+                    $nameTable = $this->relations['has_one'][$i]['table'].'s';
+                    $read = ORM::read($nameTable, $find[$i][$keyToSearch]);
+                    $this->$nameTable = $read;
+                }
+                return;
             }
             if (isset($this->relations['many_to_many']))
             {
