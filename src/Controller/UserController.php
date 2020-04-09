@@ -89,14 +89,21 @@ class UserController extends \Core\Controller
         }
     }
 
-    public function detailsAction($id)
+    public function detailsAction($id = null)
     {
-        $UserModel = new \Model\UserModel(['id' => $id]);
-        echo '<pre>';
-        //var_dump($UserModel->relations['has_many']);
-        var_dump($UserModel->articles[0]->content);
-        var_dump($UserModel->promos->year);
-        echo '</pre>';
+        if ($id !== null)
+        {
+            $UserModel = new \Model\UserModel(['id' => $id]);
+            //$article = new \Model\ArticleModel(['id' => 1]);
+            echo '<pre>';
+            //var_dump($article);
+            //var_dump($UserModel->relations['has_many']);
+             var_dump($UserModel->articles[0]->content);
+             var_dump($UserModel->promos->year);
+             var_dump($UserModel->colors);
+            echo '</pre>';
+        }
+
         $this->view = 'details'; 
         //$this->scope = ['msg' => $msg]; 
     }

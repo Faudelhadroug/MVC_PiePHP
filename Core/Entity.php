@@ -41,7 +41,8 @@ class Entity
             if (isset($this->relations['has_one']))
             {
                 $idToSearch = substr($table, 0 , -1).'_id';
-                for ($i = 0; $i !== count($this->relations['has_many']); $i++)
+                
+                for ($i = 0; $i !== count($this->relations['has_one']); $i++)
                 {
                     $keyToSearch = $this->relations['has_one'][$i]['key'];
                     $find = \Core\ORM::find($table, $condition = array(
@@ -49,15 +50,40 @@ class Entity
                         'ORDER BY' => 'id ASC',
                         'LIMIT' => '' 
                     ));
-                    $find[$i][$keyToSearch];
-                    $nameTable = $this->relations['has_one'][$i]['table'].'s';
-                    $read = ORM::read($nameTable, $find[$i][$keyToSearch]);
-                    $this->$nameTable = $read;
+                    if (count($find) > 0) 
+                    {
+                        $find[$i][$keyToSearch];
+                        $nameTable = $this->relations['has_one'][$i]['table'].'s';
+                        $read = ORM::read($nameTable, $find[$i][$keyToSearch]);
+                        $this->$nameTable = $read;
+                    }
                 }
-                return;
             }
             if (isset($this->relations['many_to_many']))
             {
+                $idToSearch = substr($table, 0 , -1).'_id';
+
+                for ($i = 0; $i !== count($this->relations['many_to_many']); $i++)
+                {
+                    $idToSearchTable2 = $this->relations['many_to_many'][$i]['table2'].'_id';
+                    //$keyToSearch = $this->relations['many_to_many'][$i]['key'];
+                    $pivotTable =  $this->relations['many_to_many'][$i]['table1'].'s_'.$this->relations['many_to_many'][$i]['table2'].'s';
+                   
+                    $findsPivotId = \Core\ORM::find($pivotTable, $condition = array(
+                        'WHERE' => [$idToSearch => $params['id']],
+                        'ORDER BY' => 'id ASC',
+                        'LIMIT' => '' 
+                    ));
+                    $relationsTable = [];
+                       // var_dump($findPivotId[$j][$idToSearchTable2]);
+                       foreach($findsPivotId as $findPivotId)
+                       {
+                           $nameTable = $this->relations['many_to_many'][$i]['table2'].'s';
+                           $read = ORM::read($nameTable, $findPivotId[$idToSearchTable2]);
+                           array_push($relationsTable, $read);
+                       }
+                    $this->$nameTable = $relationsTable;
+                }
                 echo '<pre> Many to many ';
                 var_dump($this->relations['many_to_many']);
                 echo '</pre>';

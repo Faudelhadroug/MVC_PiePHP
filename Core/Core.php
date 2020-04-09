@@ -47,7 +47,7 @@ class Core
         }
         else    // Routage dynamique
         {
-            $pathParametrique = ['/delete/', '/user/details/'];
+            $pathParametrique = ['/delete/'];
             $i = 0;
             $access = true;
             while ($i !== count($pathParametrique))
