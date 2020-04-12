@@ -84,9 +84,6 @@ class Entity
                        }
                     $this->$nameTable = $relationsTable;
                 }
-                echo '<pre> Many to many ';
-                var_dump($this->relations['many_to_many']);
-                echo '</pre>';
             }
             $fields = $params;
             $params = ORM::read($table, $params['id']);

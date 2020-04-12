@@ -1,6 +1,8 @@
-<?php
+<h2>Index</h2>
 
-// echo '<pre>'.print_r($_POST).'</pre>';
-// echo '<pre>'.print_r($_GET).'</pre>';
-// echo '<pre>'.print_r($_SERVER).'</pre>';
-// echo '<pre> salalalal </pre>';
+{{$users[0]->id}}
+
+@foreach ($users as $user)
+            <div>
+                <h4>{$user->email}</h4>
+@endforeach

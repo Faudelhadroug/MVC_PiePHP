@@ -13,8 +13,10 @@ class UserController extends \Core\Controller
     }
     public function indexAction()
     {
-        echo '<br> IndexAction de la class User : sexy mec <br><br>';
+        $instance = new \Model\UserModel([]);
+        $users = $instance->read_all();
         $this->view = 'index';
+        $this->scope = ['users' => $users]; 
     }
     public function addAction()
     {
@@ -94,14 +96,11 @@ class UserController extends \Core\Controller
         if ($id !== null)
         {
             $UserModel = new \Model\UserModel(['id' => $id]);
-            //$article = new \Model\ArticleModel(['id' => 1]);
-            echo '<pre>';
-            //var_dump($article);
-            //var_dump($UserModel->relations['has_many']);
-             var_dump($UserModel->articles[0]->content);
-             var_dump($UserModel->promos->year);
-             var_dump($UserModel->colors);
-            echo '</pre>';
+            // $article = new \Model\ArticleModel(['id' => 1]);
+            //  var_dump($UserModel->articles[0]->content);
+            //  var_dump($UserModel->promos->year);
+            //  var_dump($UserModel->colors);
+            $this->scope = ['UserModel' => $UserModel]; 
         }
 
         $this->view = 'details'; 
