@@ -100,9 +100,12 @@ class UserController extends \Core\Controller
             //  var_dump($UserModel->promos->year);
             //  var_dump($UserModel->colors);
             $this->scope = ['UserModel' => $UserModel]; 
+            $this->view = 'details'; 
         }
-
-        $this->view = 'details'; 
+        else
+        {
+            $this->view = 'show'; 
+        }
         //$this->scope = ['msg' => $msg]; 
     }
     public function __destruct()
