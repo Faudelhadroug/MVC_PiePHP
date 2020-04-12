@@ -72,7 +72,6 @@ class UserController extends \Core\Controller
         {
             $UserModel = new \Model\UserModel($this->Request->POST);
             $connexion = $UserModel->connexion();
-            var_dump($connexion);
             if (isset($connexion) == true)
             {
                 echo 'connexion réussi';
