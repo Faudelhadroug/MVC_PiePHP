@@ -19,23 +19,10 @@ function autoLoad($class)
     { 
         if (file_exists($arrayPath[$i].DIRECTORY_SEPARATOR.$classpath))
         { 
-            //$arrayPath[$i].DIRECTORY_SEPARATOR.$classpath
             $classpath = $arrayPath[$i].DIRECTORY_SEPARATOR.$classpath;
             require_once $classpath;
             return;
         }
-        // elseif (file_exists(str_replace('\\', '/', $classpath)))
-        // {
-
-        //     include str_replace('\\', '/', $classpath);
-        //     return;
-        // }
-        // elseif (file_exists($arrayPath[$i].DIRECTORY_SEPARATOR.str_replace('\\', '/', $classpath)))
-        // { 
-        //     $classpath = $arrayPath[$i].DIRECTORY_SEPARATOR.str_replace('\\', '/', $classpath);
-        //     include $classpath;
-        //     return;
-        // }
     }
 
 }

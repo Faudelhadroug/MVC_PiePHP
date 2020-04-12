@@ -12,12 +12,10 @@ class Core
     public function run()
     {
        // echo __CLASS__ . " [OK]" . PHP_EOL; 
-
         $baseLinkCountStatic = strlen('/github/MVC_PiePHP');
         $virginLinkStatic = ucfirst(substr($_SERVER['REQUEST_URI'], $baseLinkCountStatic));
        
         /* Routeur */
-        
         if ($route = Router::get($virginLinkStatic) !== null)   // Routage statique
         {
             if(array_key_exists('route', Router::get($virginLinkStatic)) == true) // Routeur paramétrique
@@ -106,7 +104,6 @@ class Core
         if (class_exists($controller))
         {
             $object = new $controller();
-            //var_dump(method_exists($object, $action));
             if (method_exists($object, $doAction))
             {
                 
@@ -120,7 +117,6 @@ class Core
         else
         {
             echo '404';
-            //throw new Exception('The class '. $controller .' does not exist.');
         }
     }
 }

@@ -4,7 +4,6 @@ namespace Core;
 
 class Entity
 {
-    //private $connexionDb;
     public static $class;
     public function __construct($params = null)
     {
@@ -40,8 +39,6 @@ class Entity
             }
             if (isset($this->relations['has_one']))
             {
-                $idToSearch = substr($table, 0 , -1).'_id';
-                
                 for ($i = 0; $i !== count($this->relations['has_one']); $i++)
                 {
                     $keyToSearch = $this->relations['has_one'][$i]['key'];
@@ -66,7 +63,6 @@ class Entity
                 for ($i = 0; $i !== count($this->relations['many_to_many']); $i++)
                 {
                     $idToSearchTable2 = $this->relations['many_to_many'][$i]['table2'].'_id';
-                    //$keyToSearch = $this->relations['many_to_many'][$i]['key'];
                     $pivotTable =  $this->relations['many_to_many'][$i]['table1'].'s_'.$this->relations['many_to_many'][$i]['table2'].'s';
                    
                     $findsPivotId = \Core\ORM::find($pivotTable, $condition = array(
@@ -75,13 +71,12 @@ class Entity
                         'LIMIT' => '' 
                     ));
                     $relationsTable = [];
-                       // var_dump($findPivotId[$j][$idToSearchTable2]);
-                       foreach($findsPivotId as $findPivotId)
-                       {
-                           $nameTable = $this->relations['many_to_many'][$i]['table2'].'s';
-                           $read = ORM::read($nameTable, $findPivotId[$idToSearchTable2]);
-                           array_push($relationsTable, $read);
-                       }
+                    foreach($findsPivotId as $findPivotId)
+                    {
+                        $nameTable = $this->relations['many_to_many'][$i]['table2'].'s';
+                        $read = ORM::read($nameTable, $findPivotId[$idToSearchTable2]);
+                        array_push($relationsTable, $read);
+                    }
                     $this->$nameTable = $relationsTable;
                 }
             }
